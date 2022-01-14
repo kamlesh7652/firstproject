@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BlogController;
 use App\Http\Controllers\TestController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,3 +19,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('get',[TestController::class,'index']);
+Route::view('blog','blog');
+Route::resource('demo',BlogController::class);
+Route::get('comment',[BlogController::class,'comment']);
+Route::post('cstore',[BlogController::class,'cstore']);
