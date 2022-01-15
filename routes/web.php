@@ -21,5 +21,5 @@ Route::get('/', function () {
 Route::get('get',[TestController::class,'index']);
 Route::view('blog','blog');
 Route::resource('demo',BlogController::class);
-Route::get('comment',[BlogController::class,'comment']);
+Route::get('comment/{id}',[BlogController::class,'comment']);
 Route::post('cstore',[BlogController::class,'cstore']);

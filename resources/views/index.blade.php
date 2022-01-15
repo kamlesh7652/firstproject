@@ -38,23 +38,40 @@
                     </div> <br />
 
 
-
-
-
-
                     @foreach ($getdata as $item)
+
                         <div class=" text-center"><span style="font-size:20px"><b>{{ $item->title }}</b></span></div>
                         <div>
-                            <img src="{{ asset('storage/' . $item->profile) }}" class="rounded mx-auto d-block" alt="..."
-                                style="width:100%;height:300px">
+                            <img src="{{ asset('storage/' . $item->profile) }}" class="rounded mx-auto d-block"
+                                alt="..." style="width:100%;height:300px">
                         </div>
                         <div>
                             {{ $item->description }}</div>
-                            <button ><a href="{{url('comment')}}">Add Comment</a></button>
-                            @foreach ($com as $cam)
-                                <div>{{$cam->name.':'}}
-                                {{$cam->comment}}</div>
-                            @endforeach
+                        <hr>
+                        <div class="col-md-10 card-body">
+                            <a href="{{ url('comment/'.$item->id) }}" class="btn btn-primary btn-sm" title="write comment here..">
+                                <i class="fa fa-plus" aria-hidden="true"></i> Add Comment
+                            </a>
+                            <a href="{{ url('demo/' . $item->id . '/edit') }}" class="btn btn-success btn-sm" title="click edit here..">
+                                <i class="fa fa-plus" aria-hidden="true"></i> EDIT
+                            </a>
+
+                        </div>
+                        <div class=" text-end ">
+                            <form action="{{ url('demo/'. $item->id) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger" title="click delete here..">DELETE</button>
+                            </form>
+                        </div>
+                        @foreach ($com as $cam)
+                        @if ($cam->blog_id==$item->id)
+
+
+                            <div>{{ $cam->name . ':' }}
+                                {{ $cam->comment }}</div>
+                                @endif
+                        @endforeach
                     @endforeach
                 </div>
             </div>

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Blog;
 use App\Models\Comment;
+use App\Models\Post;
+
 class BlogController extends Controller
 {
     /**
@@ -71,7 +73,9 @@ class BlogController extends Controller
      */
     public function edit($id)
     {
-        //
+        $getdata=Blog::find($id);
+        return view('edit',compact('getdata'));
+       //dd($edt);
     }
 
     /**
@@ -83,7 +87,19 @@ class BlogController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $update=Blog::find($id);
+        $update->title=$request->title;
+        $update->description=$request->description;
+        if($request->hasfile('profile'))
+        {
+          $file=$request->file('profile');
+          $extention=$file->getClientOriginalExtension();
+          $filename=time().'.'.$extention;
+          $file->move('storage',$filename);
+          $update->profile=$filename;
+        }
+        $update->save();
+       return redirect('demo');
     }
 
     /**
@@ -94,18 +110,27 @@ class BlogController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $dd=Blog::find($id);
+        $dd->delete();
+        return redirect('demo');
     }
-    public function comment()
-    {
-        return view('comment');
+    public function comment($id)
+    {     $hh=$id;
+
+        return view('comment',compact('hh'));
     }
     public function cstore(Request $req)
     {
       $comment= new Comment;
       $comment->name=$req->name;
       $comment->comment=$req->comment;
+      $comment->blog_id=$req->blog_id;
       $comment->save();
       return redirect('demo');
+    }
+    function api()
+    {
+        $blogApi=Blog::with(['Comment'])->first();
+        return $blogApi;
     }
 }

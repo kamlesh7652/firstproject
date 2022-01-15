@@ -26,6 +26,10 @@
             <input type="text" class="form-control" id="title1" name="name">
 
           </div>
+          <div class="mb-3">
+            <label  class="form-label">Blog id</label>
+            <input type="text" class="form-control" id="title1" name="blog_id" value={{$hh}}></div>
+
           <div class="form-floating">
             <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px" name="comment"></textarea>
             <label for="floatingTextarea2">Comment</label>
